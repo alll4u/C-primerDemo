@@ -4,6 +4,9 @@
 #include <deque>
 #include <list>
 #include <forward_list>
+#include <algorithm>
+#include <numeric>
+
 using namespace std;
 
 //insert returnation to insert times
@@ -143,47 +146,115 @@ void demo_9_26(){
 
 
 }
+//demo_9_34
+void erase_elem(vector<int> vc){
+	cout << "//demo_9_34" << endl;
+	auto iter = vc.begin();
+	while (iter != vc.end())
+	{
+	
+		if (*iter % 2){
+			cout << "*iter" << *iter << endl;
+			iter = vc.insert(iter, *iter);
+		
+		}
+		else{
+			cout << "nothing" << endl;
+		}
+		++iter;
+	}
+	for (auto tmp : vc){
+		cout << tmp << endl;
+	}
+}
 
+//vector's size capacity and reserve
+void vectorSize(){
+	vector<int> a;
+	cout << "a.size " << a.size() << endl;
+	cout << "a.capacity " << a.capacity() << endl;
+	
+	for (int i = 0; i < 25; i++){
+		a.push_back(10);
+	}
+	cout << "a.size " << a.size() << endl;
+	cout << "a.capacity " << a.capacity() << endl;
+
+	a.reserve(50);
+	cout << "a.size " << a.size() << endl;
+	cout << "a.capacity " << a.capacity() << endl;
+
+
+	while (a.size() != a.capacity()){
+		a.push_back(10);
+	}
+	cout << "a.size " << a.size() << endl;
+	cout << "a.capacity " << a.capacity() << endl;
+
+	a.push_back(10);
+	cout << "a.size " << a.size() << endl;
+	cout << "a.capacity " << a.capacity() << endl;
+}
+
+//string constructor
+void noNull(){
+	const char*cp = "hello World!";
+	char cp2[] = { 'H', 'e', 'l' };
+	vector<char> vc = { 'H', 'e', 'l' };
+
+	string a1(cp);
+	string a2(cp, 4);
+	string a3(cp, 4, 3);
+	string a4(cp2);
+	string a5(cp2, 111);
+	string a6(vc.cbegin(), vc.cend());
+	cout << "a is " << a1 << endl;
+	cout << a2 << endl;
+	cout << a3 << endl;
+	cout << a4 << endl;
+	cout << a5 << endl;
+	cout << a6 << endl;
+
+	a6.append("123").append("456").append("456").append("456").append("456");
+	cout << a6 << endl;
+}
+
+//replace long string with short string
+void replaceStr(string s, string oldVal, string newVal){
+	
+	auto pos = s.find(oldVal);
+	cout << "old s is" << s << endl;
+	while (pos <= s.size())
+	{
+		s.erase(pos, oldVal.size());
+		s.insert(pos, newVal);
+		pos = s.find(oldVal);
+	}
+	cout << "new s is " << s << endl;
+}
+void replaceStr(string s, string oldVal, string newVal){
+	7h
+}
 int main(){
 	list<string> lst;
 	deque<string> dq;
 	vector<string> vc = {"1","2","3","333","ddd","ddas"};
+	vector<int> i_vc = {  2, 3, 4, 5, 6, 7, 8 };
 	forward_list<string> fl;
 
-	vc.emplace_back("a");
-	for (auto tmp : vc){
-		cout << tmp << endl;
-	}
-
-	auto v = vc.front();
-	v = "b";
-	cout << vc[0] << endl;
-	auto &v2 = vc.front();
-	v2 = "c";
-	cout << vc[0] << endl;
-
-	vector<string>::iterator rtn = vc.begin();
-	if (rtn == vc.end()){
-		cout << "end" << endl;
-	}
-	else{
-		cout << "not end" << endl;
-	}
-	rtn = vc.erase(vc.begin());
-	if (rtn == vc.end()){
-		cout << "end" << endl;
-	}
-	else{
-		cout << "not end" << endl;
-	}
-
-	erase_elem(vc);
-	demo_9_26();
+	//erase_elem(vc);
+	//demo_9_26();
 
 	//finda();
 
 	//cout << "insert RTN" << endl;
 	//insertRtn();
+
+	//vectorSize();
+	//noNull();
+
+	string s = "feijichangfeijichangfeijichangfeiji";
+	replaceStr(s, "fei", "ji");
 
 	system("pause");
 }
