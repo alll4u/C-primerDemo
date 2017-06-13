@@ -220,7 +220,7 @@ void noNull(){
 }
 
 //replace long string with short string
-void replaceStr(string s, string oldVal, string newVal){
+void replaceStr(string s, string &oldVal, string &newVal){
 	
 	auto pos = s.find(oldVal);
 	cout << "old s is" << s << endl;
@@ -232,8 +232,77 @@ void replaceStr(string s, string oldVal, string newVal){
 	}
 	cout << "new s is " << s << endl;
 }
-void replaceStr(string s, string oldVal, string newVal){
-	7h
+void replaceString(std::string &s, const std::string &oldVal, const std::string &newVal){
+
+	if (oldVal.empty() || s.empty()){
+		return;
+	}
+
+	if (s.size() < oldVal.size()){
+		return;
+	}
+
+	auto sIter = s.begin();
+	auto oldIter = oldVal.begin();
+	cout << "old s is" << s << endl;
+	while (sIter != s.end()){
+
+		if ((*sIter) == (*oldIter)){
+			++oldIter;
+		}
+		else {
+			oldIter = oldVal.begin();
+		}
+
+		++sIter;
+
+		if (oldIter == oldVal.end()){
+			oldIter = oldVal.begin();
+			sIter = s.erase(sIter - oldVal.size(), sIter);
+			/*for (std::string::size_type index = 0; index < newVal.size(); ++index){
+				sIter = s.insert(sIter, newVal[index]);
+				++sIter;
+			}*/
+			//以下代码用来替代上面注释掉的
+			s.insert(sIter, newVal.begin(),newVal.end());
+		}
+	}
+	cout << "new s is " << s << endl;
+
+}
+
+void replaceString2(std::string &s, const std::string &oldVal, const std::string &newVal){
+	if (oldVal.empty() || s.empty()){
+		return;
+	}
+
+	if (s.size() < oldVal.size()){
+		return;
+	}
+
+	auto oldIdx = 0;
+	auto sIdx = 0;
+	auto newIdx = 0;
+	cout << "old s is " << s << endl;
+	while (sIdx != s.size())
+	{
+		if (oldVal[oldIdx] == s[sIdx]){
+			oldIdx++;
+		}
+		else{
+			oldIdx = 0;
+		}
+		sIdx++;
+		if (oldIdx == oldVal.size()){
+			oldIdx = 0;
+			s.replace(sIdx - oldVal.size(), oldVal.size(), newVal);
+			//下面这句非常重要！！！删了会出现问题，第一次没想到这个问题
+			sIdx += newVal.size() - oldVal.size();
+		}
+			
+
+	}
+	cout << "new s is " << s << endl;
 }
 int main(){
 	list<string> lst;
@@ -254,7 +323,7 @@ int main(){
 	//noNull();
 
 	string s = "feijichangfeijichangfeijichangfeiji";
-	replaceStr(s, "fei", "ji");
+	replaceString2(s, "feijichang", "ji");
 
 	system("pause");
 }
