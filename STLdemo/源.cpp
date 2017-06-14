@@ -6,6 +6,8 @@
 #include <forward_list>
 #include <algorithm>
 #include <numeric>
+#include <map>
+#include <set>
 
 using namespace std;
 
@@ -299,9 +301,23 @@ void replaceString2(std::string &s, const std::string &oldVal, const std::string
 			//下面这句非常重要！！！删了会出现问题，第一次没想到这个问题
 			sIdx += newVal.size() - oldVal.size();
 		}
-			
-
 	}
+	cout << "new s is " << s << endl;
+}
+//insert append prefix and ending
+void insNApp(string s, const string &pre, const string &end){
+	auto sIter = s.begin();
+
+	cout << "old s is " << s << endl;
+	
+	
+	//option1
+	//s.insert(sIter, pre.begin(),pre.end());
+	//s.append(end);
+	//option2
+	s.insert(0, pre,0,pre.size());
+	s.insert(s.size(), end,0,end.size());
+	//end
 	cout << "new s is " << s << endl;
 }
 int main(){
@@ -322,8 +338,19 @@ int main(){
 	//vectorSize();
 	//noNull();
 
-	string s = "feijichangfeijichangfeijichangfeiji";
-	replaceString2(s, "feijichang", "ji");
+	//string s = "feijichangfeijichangfeijichangfeiji";
+	//insNApp(s, "MR.", "JR>");
 
+	pair<string, string> pair1 = { "feifei", "xx" } ;
+	cout << pair1.first << " " << pair1.second << endl;
+	map<string, int> map1 = { { "fei", 1 }, { "yin", 33 } };
+	auto iMap1 = map1.begin();
+	cout << "map1.back() " << iMap1->second << endl;
+	//iMap1->first = "fff";
+	iMap1->second = 2;
+	cout << "map1.back() " << iMap1->second << endl;
+
+	auto a = i_vc.begin();
+	cout << "a->back " << *a << endl;
 	system("pause");
 }
